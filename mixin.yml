@@ -1,0 +1,97 @@
+mixin:
+  proxy-groups:
+    - name: PROXY
+      type: url-test
+      proxies:
+          - 🇺🇸美国1号-0.1倍
+          - 🇺🇸美国2号-0.1倍
+          - '🇳🇱荷兰Eygelshoven | BT下载-0.1倍'
+          - '🇳🇱荷兰 | BT下载-0.1倍'
+      url: 'http://www.gstatic.com/generate_204'
+      interval: 86400 
+    - name: 一分机场
+      type: select
+      proxies: [🇺🇸美国1号-0.1倍, 🇺🇸美国2号-0.1倍, 🇯🇵日本｜节点显示不全更换APP, 🇯🇵日本2号, 🇸🇬新加坡｜无法显示vless节点换软件, '🇳🇱荷兰Eygelshoven | BT下载-0.1倍', '🇳🇱荷兰 | BT下载-0.1倍', 🇹🇼台湾｜节点不可用更新订阅]
+  rule-providers:
+    reject:
+      type: http
+      behavior: domain
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt
+      path: ./ruleset/reject.yaml
+      interval: 86400
+    icloud:
+      type: http
+      behavior: domain
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt
+      path: ./ruleset/icloud.yaml
+      interval: 86400
+    apple:
+      type: http
+      behavior: domain
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt
+      path: ./ruleset/apple.yaml
+      interval: 86400
+    google:
+      type: http
+      behavior: domain
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt
+      path: ./ruleset/google.yaml
+      interval: 86400
+    proxy:
+      type: http
+      behavior: domain
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt
+      path: ./ruleset/proxy.yaml
+      interval: 86400
+    direct:
+      type: http
+      behavior: domain
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt
+      path: ./ruleset/direct.yaml
+      interval: 86400
+    cncidr:
+      type: http
+      behavior: ipcidr
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt
+      path: ./ruleset/cncidr.yaml
+      interval: 86400
+    lancidr:
+      type: http
+      behavior: ipcidr
+      url: https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt
+      path: ./ruleset/lancidr.yaml
+      interval: 86400
+    tld-not-cn:
+      type: http
+      behavior: domain
+      url: "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
+      path: ./ruleset/tld-not-cn.yaml
+      interval: 86400
+    gfw:
+      type: http
+      behavior: domain
+      url: "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt"
+      path: ./ruleset/gfw.yaml
+      interval: 86400
+    
+    greatfire:
+      type: http
+      behavior: domain
+      url: "https://fastly.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/greatfire.txt"
+      path: ./ruleset/greatfire.yaml
+      interval: 86400
+
+  rules:
+      - IP-CIDR,1.0.0.1/32,DIRECT
+      - IP-CIDR,101.101.101.101/32,DIRECT
+      - IP-CIDR,8.8.8.8/32,DIRECT
+      - RULE-SET,icloud,DIRECT
+      - RULE-SET,apple,DIRECT
+      - RULE-SET,google,DIRECT
+      - RULE-SET,proxy,PROXY
+      - RULE-SET,gfw,PROXY
+      - RULE-SET,greatfire,PROXY
+      - GEOIP,CN,DIRECT
+      - GEOIP,HK,DIRECT
+      - GEOIP,TW,DIRECT
+      - MATCH,PROXY
